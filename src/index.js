@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-// import App from './App';
+import App from './App';
 import 'bootstrap/scss/bootstrap.scss';
 import * as serviceWorker from './serviceWorker';
-import Counter from './components/counter';
-
-ReactDOM.render( <Counter/> , document.getElementById('root'));
+// import Counter from './components/counter';
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faIgloo } from '@fortawesome/free-solid-svg-icons'
+//add fontawesome
+library.add(faIgloo) 
+ReactDOM.render( <App/> , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
