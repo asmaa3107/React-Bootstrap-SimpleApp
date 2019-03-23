@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 
-
 class MoviesComp extends Component {
   state = {
     movies: getMovies()
   };
+
+  confirmDelete = movie => {
+    const updated_movielist = this.state.movies.filter(
+      m => m._id !== movie._id
+    );
+    this.setState({ movies: updated_movielist });
+    // console.log(movie);
+  };
+
   render() {
+    //es6 parameter destracting
+    const { length: count } = this.state.movies;
+    // if(count === 0) return <p>No movies for now</p>
     return (
       <div className="container">
         <div className="jumbotron text-center">
@@ -19,6 +30,12 @@ class MoviesComp extends Component {
           <div className="row">
             <div className="col-12">
               <div className="table-responsive">
+                {/**we use short if to render if condition in jsx */}
+                {count === 0 ? (
+                  <p>No Movies Here </p>
+                ) : (
+                  <p>we have {count} Movies .. Enjoy!</p>
+                )}
                 <table className="table table-striped">
                   <thead>
                     <tr>
@@ -40,7 +57,7 @@ class MoviesComp extends Component {
                         <td>
                           <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
                         </td>
-                        <td key={m._id}>{m.title}</td>
+                        <td>{m.title}</td>
                         <td>In stock</td>
                         <td>
                           <input className="form-control" type="text" />
@@ -49,10 +66,11 @@ class MoviesComp extends Component {
                         <td className="text-right">
                           <button
                             className="btn btn-sm btn-danger"
-                            onClick={() => this.confirmDelete(m._id)}
+                            onClick={() => this.confirmDelete(m)}
                           >
-                           <span className="fa fa-trash-o"></span>{"  "}
-                           delete
+                            <span className="fa fa-trash-o" />
+                            {"  "}
+                            delete
                           </button>
                         </td>
                       </tr>
@@ -80,19 +98,6 @@ class MoviesComp extends Component {
       </div>
     );
   }
-
-  confirmDelete = id => {
-    debugger;
-
-    let obj = this.state.movies.filter(m => m._id === id);
-    let newOj = this.state.movies;
-    if (newOj.indexOf(obj) > -1) newOj.slice(newOj.indexOf(obj), 1);
-    console.log(obj);
-    console.log(newOj);
-
-    // obj.pop();
-    // this.setState({ movies: obj });
-  };
 } //* end of  class
 
 export default MoviesComp;
