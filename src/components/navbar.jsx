@@ -21,18 +21,20 @@ class Navbar extends Component {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  Link
+                  <i class="fa fa-shopping-cart" />
+                  <span class="badge badge-pill badge-secondary mx-1">
+                    {this.props.totalValues}
+                  </span>
+                </a>
+              </li>{" "}
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Profile
                 </a>
               </li>
               <li className="nav-item">
-                <i class="fas fa-shopping-cart" />
-                <span class="badge badge-pill badge-secondary">
-                  {this.props.totalValues}
-                </span>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="#">
-                  Link
+                  Logout <i class="fa fa-sign-out" aria-hidden="true" />
                 </a>
               </li>
             </ul>
