@@ -43,7 +43,7 @@ class MoviesComp extends Component {
                       <th scope="col">Product</th>
                       <th scope="col">Available</th>
                       <th scope="col" className="text-center">
-                        Quantity
+                        Likes
                       </th>
                       <th scope="col" className="text-right">
                         Price
@@ -60,17 +60,17 @@ class MoviesComp extends Component {
                         <td>{m.title}</td>
                         <td>In stock</td>
                         <td>
-                          <input className="form-control" type="text" />
+                          <i className="fa fa-heart-o text-danger" aria-hidden="true"></i>
+                          <i className="fa fa-heart text-danger" aria-hidden="true"></i>
                         </td>
                         <td className="text-right">124,90 €</td>
                         <td className="text-right">
                           <button
                             className="btn btn-sm btn-danger"
                             onClick={() => this.confirmDelete(m)}
-                          >
+                          > 
                             <span className="fa fa-trash-o" />
-                            {"  "}
-                            delete
+                            
                           </button>
                         </td>
                       </tr>

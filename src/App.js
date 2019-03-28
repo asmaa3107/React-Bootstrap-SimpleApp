@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 import './App.scss';
-//  import  MoviesComp from './components/movies';
+import  MoviesComp from './components/movies';
 import Counters from './components/counters';
 
 import Navbar  from "./components/navbar";
@@ -63,6 +63,7 @@ class App extends Component {
         onDecrement={this.handelDecrement}
         onDelete={this.handelDelete}
         /> 
+        <MoviesComp/>
       </main>
     {/* <MoviesComp/> */} 
       </React.Fragment>
