@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-
-class Navbar extends Component {
-  state = {};
-  render() {
+import React from "react";
+//child view
+//stateless commponent 
+ const Navbar = props => {
+  
+    const {totalValues} = props;
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <div className="container">
@@ -23,7 +24,7 @@ class Navbar extends Component {
                 <a className="nav-link" href="#">
                   <i class="fa fa-shopping-cart" />
                   <span class="badge badge-pill badge-secondary mx-1">
-                    {this.props.totalValues}
+                    {totalValues}
                   </span>
                 </a>
               </li>{" "}
@@ -43,6 +44,7 @@ class Navbar extends Component {
       </nav>
     );
   }
-}
+
+
 
 export default Navbar;

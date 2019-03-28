@@ -19,7 +19,6 @@ class App extends Component {
 
   };
 //  total = this.state.counters.filter(c=> c.value>0).length;  
-
   handelDelete = counterId => {
     const counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
@@ -33,6 +32,14 @@ class App extends Component {
     this.setState({ counters });
     console.log(counter);
   };
+  handelDecrement = counter => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value--;
+    this.setState({ counters });
+    console.log(counter);
+  }
   resetCounters = () => {
     const counters = this.state.counters.map(c => {
       c.value = 0;
@@ -53,16 +60,15 @@ class App extends Component {
         counters={this.state.counters}
         onReset={this.resetCounters}
         onIncrement={this.handelIncreament}
+        onDecrement={this.handelDecrement}
         onDelete={this.handelDelete}
         /> 
       </main>
     {/* <MoviesComp/> */} 
       </React.Fragment>
-
     );
   }
-
-  
+ 
 }
 
 export default App;
