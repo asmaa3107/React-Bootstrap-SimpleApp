@@ -22,8 +22,8 @@ import React from "react";
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <i class="fa fa-shopping-cart" />
-                  <span class="badge badge-pill badge-secondary mx-1">
+                  <i className="fa fa-shopping-cart" />
+                  <span className="badge badge-pill badge-secondary mx-1">
                     {totalValues}
                   </span>
                 </a>
@@ -35,7 +35,7 @@ import React from "react";
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  Logout <i class="fa fa-sign-out" aria-hidden="true" />
+                  Logout <i className="fa fa-sign-out" aria-hidden="true" />
                 </a>
               </li>
             </ul>

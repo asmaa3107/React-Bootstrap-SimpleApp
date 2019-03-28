@@ -58,19 +58,24 @@ class MoviesComp extends Component {
                           <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
                         </td>
                         <td>{m.title}</td>
-                        <td>In stock</td>
+                        <td>stoock</td>
                         <td>
-                          <i className="fa fa-heart-o text-danger" aria-hidden="true"></i>
-                          <i className="fa fa-heart text-danger" aria-hidden="true"></i>
+                          <i
+                            className="fa fa-heart-o text-danger"
+                            aria-hidden="true"
+                          />
+                          <i
+                            className="fa fa-heart text-danger"
+                            aria-hidden="true"
+                          />
                         </td>
                         <td className="text-right">124,90 €</td>
                         <td className="text-right">
                           <button
                             className="btn btn-sm btn-danger"
                             onClick={() => this.confirmDelete(m)}
-                          > 
+                          >
                             <span className="fa fa-trash-o" />
-                            
                           </button>
                         </td>
                       </tr>
