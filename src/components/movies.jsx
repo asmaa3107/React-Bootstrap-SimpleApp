@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-
+import Like from "./comman/like";
 class MoviesComp extends Component {
   state = {
     movies: getMovies()
@@ -13,7 +13,15 @@ class MoviesComp extends Component {
     this.setState({ movies: updated_movielist });
     // console.log(movie);
   };
-
+  handelLiked = movie => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    //tooglelike
+    movies[index].like = !movies[index].like;
+    this.setState({ movies });
+   // console.log(movie);
+  };
   render() {
     //es6 parameter destracting
     const { length: count } = this.state.movies;
@@ -36,7 +44,7 @@ class MoviesComp extends Component {
                 ) : (
                   <p>we have {count} Movies .. Enjoy!</p>
                 )}
-                <table className="table table-striped">
+                <table className="table table-striped text-center">
                   <thead>
                     <tr>
                       <th scope="col"> </th>
@@ -60,15 +68,11 @@ class MoviesComp extends Component {
                         <td>{m.title}</td>
                         <td>stoock</td>
                         <td>
-                          <i
-                            className="fa fa-heart-o text-danger"
-                            aria-hidden="true"
+                          <Like
+                            Liked={m.like}
+                            onClick={() => this.handelLiked(m)}
                           />
-                          <i
-                            className="fa fa-heart text-danger"
-                            aria-hidden="true"
-                          />
-                        </td>
+                        </td> 
                         <td className="text-right">124,90 €</td>
                         <td className="text-right">
                           <button
