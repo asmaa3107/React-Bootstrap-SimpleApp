@@ -55,7 +55,14 @@ class App extends Component {
       <Navbar
       totalValues={this.state.counters.filter(c => c.value>0).length}
       />
+       <div className="jumbotron text-center">
+          <div className="container  ">
+            <h1 className="jumbotron-heading">E-COMMERCE CART</h1>
+          </div>
+        </div>
       <main className="container">
+        <MoviesComp/>
+       <hr className="my-5" />
         <Counters
         counters={this.state.counters}
         onReset={this.resetCounters}
@@ -63,7 +70,7 @@ class App extends Component {
         onDecrement={this.handelDecrement}
         onDelete={this.handelDelete}
         /> 
-        <MoviesComp/>
+
       </main>
     {/* <MoviesComp/> */} 
       </React.Fragment>

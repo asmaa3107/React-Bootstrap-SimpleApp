@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./comman/like";
+import Pagination from "./comman/pagination";
+import Grouping from './comman/grouping';
+import { timingSafeEqual } from "crypto";
 class MoviesComp extends Component {
   state = {
-    movies: getMovies()
+    movies: getMovies(),
+    pageSize:4
   };
 
   confirmDelete = movie => {
@@ -13,7 +17,7 @@ class MoviesComp extends Component {
     this.setState({ movies: updated_movielist });
     // console.log(movie);
   };
-  handelLiked = movie => {
+  handelLiked = movie => { 
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movies[index] };
@@ -22,21 +26,22 @@ class MoviesComp extends Component {
     this.setState({ movies });
    // console.log(movie);
   };
+  handelPageChange = page =>{
+    console.log(page);
+  };
   render() {
     //es6 parameter destracting
     const { length: count } = this.state.movies;
     // if(count === 0) return <p>No movies for now</p>
     return (
       <div className="container">
-        <div className="jumbotron text-center">
-          <div className="container  ">
-            <h1 className="jumbotron-heading">E-COMMERCE CART</h1>
-          </div>
-        </div>
-
+    
         <div className="container mb-4 ">
           <div className="row">
-            <div className="col-12">
+          <div className="col col-md-3 mt-5">
+          <Grouping />
+          </div>
+            <div className="col-9">
               <div className="table-responsive">
                 {/**we use short if to render if condition in jsx */}
                 {count === 0 ? (
@@ -86,6 +91,11 @@ class MoviesComp extends Component {
                     ))}
                   </tbody>
                 </table>
+            <Pagination
+            itemsCount={count}
+            pageSize={this.state.pageSize}
+            onPageChhange={this.handelPageChange}
+             />
               </div>
             </div>
             <div className="col mb-2">
