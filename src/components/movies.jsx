@@ -3,11 +3,12 @@ import { getMovies } from "../services/fakeMovieService";
 import Like from "./comman/like";
 import Pagination from "./comman/pagination";
 import Grouping from './comman/grouping';
-import { timingSafeEqual } from "crypto";
+import { paginate } from "../utils/paginate";
 class MoviesComp extends Component {
   state = {
     movies: getMovies(),
-    pageSize:4
+    pageSize:4,
+    currentPage :1
   };
 
   confirmDelete = movie => {
@@ -27,11 +28,13 @@ class MoviesComp extends Component {
    // console.log(movie);
   };
   handelPageChange = page =>{
-    console.log(page);
+    this.setState({currentPage : page });
   };
   render() {
     //es6 parameter destracting
     const { length: count } = this.state.movies;
+    const { pageSize ,currentPage , movies : allMovies} = this.state;
+   const movies = paginate (allMovies , currentPage , pageSize);
     // if(count === 0) return <p>No movies for now</p>
     return (
       <div className="container">
@@ -65,7 +68,7 @@ class MoviesComp extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.movies.map(m => (
+                    {movies.map(m => (
                       <tr key={m._id}>
                         <td>
                           <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
@@ -93,8 +96,9 @@ class MoviesComp extends Component {
                 </table>
             <Pagination
             itemsCount={count}
-            pageSize={this.state.pageSize}
-            onPageChhange={this.handelPageChange}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handelPageChange}
              />
               </div>
             </div>
