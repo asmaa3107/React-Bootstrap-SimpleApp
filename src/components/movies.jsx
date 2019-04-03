@@ -11,7 +11,7 @@ class MoviesComp extends Component {
     pageSize: 4,
     currentPage: 1,
     genres: [],
- 
+    selectedItem: []
   };
   componentDidMount() {
     this.setState({ movies: getMovies(), genres: getGenres() });
@@ -36,18 +36,24 @@ class MoviesComp extends Component {
     this.setState({ currentPage: page });
   };
   handelGenreSelect = genre => {
-   this.setState({ selectedItem : genre});console.log(genre);
+    this.setState({ selectedItem: genre }); //nsole.log(genre);
   };
   render() {
     //es6 parameter destracting
-    const { length: count } = this.state.movies;
     const {
       pageSize,
       currentPage,
       movies: allMovies,
       selectedItem
     } = this.state;
-    const movies = paginate(allMovies, currentPage, pageSize);
+    //filtering
+    const filterd = selectedItem 
+      ? allMovies.filter(m => m.genre._id === selectedItem._id)
+      : allMovies;
+    const { length: count } = filterd;
+      // debugger;
+    //paging
+    const movies = paginate(filterd, currentPage, pageSize);
     // if(count === 0) return <p>No movies for now</p>
     return (
       <div className="container">
@@ -56,7 +62,7 @@ class MoviesComp extends Component {
             <div className="col col-md-3 mt-5">
               <Grouping
                 items={this.state.genres}
-                selectedItem = {selectedItem}
+                selectedItem={selectedItem}
                 onItemSelect={this.handelGenreSelect}
               />
             </div>
@@ -84,7 +90,7 @@ class MoviesComp extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {movies.map(m => (
+                    {filterd.map(m => (
                       <tr key={m._id}>
                         <td>
                           <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
