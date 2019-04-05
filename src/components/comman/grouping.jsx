@@ -14,9 +14,9 @@ const Grouping = props => {
 
   return (
     <ul className="list-group">
-      <li className="list-group-item active" data-cursor="hand">
+      {/* <li className="list-group-item active" data-cursor="hand">
         All Genres
-      </li>
+      </li> */}
       {items.map(g => (
         <li
           data-cursor="hand"

@@ -14,7 +14,8 @@ class MoviesComp extends Component {
     selectedItem: []
   };
   componentDidMount() {
-    this.setState({ movies: getMovies(), genres: getGenres() });
+    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
+    this.setState({ movies: getMovies(), genres });
   }
   confirmDelete = movie => {
     const updated_movielist = this.state.movies.filter(
@@ -36,22 +37,23 @@ class MoviesComp extends Component {
     this.setState({ currentPage: page });
   };
   handelGenreSelect = genre => {
-    this.setState({ selectedItem: genre }); //nsole.log(genre);
+    this.setState({ selectedGenre: genre }); //nsole.log(genre);
   };
   render() {
     //es6 parameter destracting
     const {
       pageSize,
+      selectedGenre,
       currentPage,
-      movies: allMovies,
-      selectedItem
+      movies: allMovies
     } = this.state;
     //filtering
-    const filterd = selectedItem 
-      ? allMovies.filter(m => m.genre._id === selectedItem._id)
-      : allMovies;
+    const filterd =   selectedGenre && selectedGenre._id
+        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+        : allMovies;
+
     const { length: count } = filterd;
-      // debugger;
+    // debugger;
     //paging
     const movies = paginate(filterd, currentPage, pageSize);
     // if(count === 0) return <p>No movies for now</p>
@@ -62,7 +64,7 @@ class MoviesComp extends Component {
             <div className="col col-md-3 mt-5">
               <Grouping
                 items={this.state.genres}
-                selectedItem={selectedItem}
+                selectedItem={selectedGenre}
                 onItemSelect={this.handelGenreSelect}
               />
             </div>
@@ -90,7 +92,7 @@ class MoviesComp extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {filterd.map(m => (
+                    {movies.map(m => (
                       <tr key={m._id}>
                         <td>
                           <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
