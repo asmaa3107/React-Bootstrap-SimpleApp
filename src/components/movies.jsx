@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
-import Like from "./comman/like";
 import Pagination from "./comman/pagination";
 import Grouping from "./comman/grouping";
+import MoviesTable from "./moviesTable";
 import { paginate } from "../utils/paginate";
+import _ from "lodash";
 class MoviesComp extends Component {
   state = {
     movies: [],
     pageSize: 4,
     currentPage: 1,
+    sortColumn: { path: "title", order: "asc" },
     genres: [],
     selectedItem: []
   };
@@ -39,23 +41,30 @@ class MoviesComp extends Component {
   handelGenreSelect = genre => {
     this.setState({ selectedGenre: genre }); //nsole.log(genre);
   };
+  handelSorting = sortColumn => {
+    this.setState({ sortColumn });
+    // console.log(path);
+  };
   render() {
     //es6 parameter destracting
     const {
       pageSize,
       selectedGenre,
       currentPage,
+      sortColumn,
       movies: allMovies
     } = this.state;
     //filtering
-    const filterd =   selectedGenre && selectedGenre._id
+    const filterd =
+      selectedGenre && selectedGenre._id
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
         : allMovies;
 
+    const sorted = _.orderBy(filterd, [sortColumn.path], [sortColumn.order]);
     const { length: count } = filterd;
-    // debugger;
+
     //paging
-    const movies = paginate(filterd, currentPage, pageSize);
+    const movies = paginate(sorted, currentPage, pageSize);
     // if(count === 0) return <p>No movies for now</p>
     return (
       <div className="container">
@@ -76,48 +85,13 @@ class MoviesComp extends Component {
                 ) : (
                   <p>we have {count} Movies .. Enjoy!</p>
                 )}
-                <table className="table table-striped text-center">
-                  <thead>
-                    <tr>
-                      <th scope="col"> </th>
-                      <th scope="col">Product</th>
-                      <th scope="col">Genres</th>
-                      <th scope="col" className="text-center">
-                        Likes
-                      </th>
-                      <th scope="col" className="text-right">
-                        Price
-                      </th>
-                      <th> </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {movies.map(m => (
-                      <tr key={m._id}>
-                        <td>
-                          <img src="https://dummyimage.com/50x50/55595c/fff" />{" "}
-                        </td>
-                        <td>{m.title}</td>
-                        <td>{m.genre.name}</td>
-                        <td>
-                          <Like
-                            Liked={m.like}
-                            onClick={() => this.handelLiked(m)}
-                          />
-                        </td>
-                        <td className="text-right">124,90 €</td>
-                        <td className="text-right">
-                          <button
-                            className="btn btn-sm btn-danger"
-                            onClick={() => this.confirmDelete(m)}
-                          >
-                            <span className="fa fa-trash-o" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <MoviesTable
+                  movies={movies}
+                  sortColumn={sortColumn}
+                  onLike={this.handelLiked}
+                  onDelete={this.confirmDelete}
+                  onSort={this.handelSorting}
+                />
                 <Pagination
                   itemsCount={count}
                   pageSize={pageSize}
