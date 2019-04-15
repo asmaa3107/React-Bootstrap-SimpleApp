@@ -11,7 +11,7 @@ class MoviesComp extends Component {
     movies: [],
     pageSize: 4,
     currentPage: 1,
-    sortColumn: { path: "title", order: "asc" },
+    sortColumn: { path: "genre.name", order: "asc" },
     genres: [],
     selectedItem: []
   };
@@ -42,8 +42,9 @@ class MoviesComp extends Component {
     this.setState({ selectedGenre: genre }); //nsole.log(genre);
   };
   handelSorting = sortColumn => {
-    this.setState({ sortColumn });
-    // console.log(path);
+   // debugger;
+    this.setState({ sortColumn: sortColumn });
+    //console.log(sortColumn);
   };
   render() {
     //es6 parameter destracting
@@ -59,7 +60,6 @@ class MoviesComp extends Component {
       selectedGenre && selectedGenre._id
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
         : allMovies;
-
     const sorted = _.orderBy(filterd, [sortColumn.path], [sortColumn.order]);
     const { length: count } = filterd;
 
