@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Like from "./comman/like";
-import Table from "./comman/table";
+import TableComp from "./comman/table";
 class MoviesTable extends Component {
   columns = [
     {
       key: "_img",
       label: "image",
-      content: m => <img src="https://dummyimage.com/50x50/55595c/fff" />
+      content:m=> <img src="https://dummyimage.com/50x50/55595c/fff" />      
     },
     { path: "title", label: "Title" },
     { path: "genre.name", label: "Genres" },
@@ -29,15 +29,19 @@ class MoviesTable extends Component {
     }
   ];
   render() {
-    const { movies, sortColumn, onSort } = this.props;
+    const { movies,  sortColumn, onSort } = this.props;
     return (
-      <Table
-        columns={this.columns}
-        sortColumn={sortColumn}
-        onSort={onSort}
-        data={movies}
-      />
-    );
+      <div>
+      <TableComp
+      columns={this.columns}
+      sortColumn={sortColumn}
+      onSort={onSort}
+      data={movies}
+    />
+  
+   
+      </div>
+  );
   }
 }
 

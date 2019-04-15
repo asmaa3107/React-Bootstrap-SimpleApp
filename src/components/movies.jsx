@@ -42,11 +42,12 @@ class MoviesComp extends Component {
     this.setState({ selectedGenre: genre }); //nsole.log(genre);
   };
   handelSorting = sortColumn => {
-   // debugger;
+    // debugger;
     this.setState({ sortColumn: sortColumn });
     //console.log(sortColumn);
   };
-  render() {
+
+  getPagedData = () => {
     //es6 parameter destracting
     const {
       pageSize,
@@ -65,7 +66,12 @@ class MoviesComp extends Component {
 
     //paging
     const movies = paginate(sorted, currentPage, pageSize);
-    // if(count === 0) return <p>No movies for now</p>
+    return { totalCount: count, data: movies };
+  };
+  render() {
+    const { pageSize, selectedGenre, currentPage, sortColumn } = this.state;
+    const count = this.state.movies.length;
+    const { totalCount, data } = this.getPagedData();
     return (
       <div className="container">
         <div className="container mb-4 ">
@@ -83,17 +89,17 @@ class MoviesComp extends Component {
                 {count === 0 ? (
                   <p>No Movies Here </p>
                 ) : (
-                  <p>we have {count} Movies .. Enjoy!</p>
+                  <p>we have {totalCount} Movies .. Enjoy!</p>
                 )}
                 <MoviesTable
-                  movies={movies}
+                  movies={data}
                   sortColumn={sortColumn}
                   onLike={this.handelLiked}
                   onDelete={this.confirmDelete}
                   onSort={this.handelSorting}
                 />
                 <Pagination
-                  itemsCount={count}
+                  itemsCount={totalCount}
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageChange={this.handelPageChange}
