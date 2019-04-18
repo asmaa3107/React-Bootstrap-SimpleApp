@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Like from "./comman/like";
 import TableComp from "./comman/table";
+import { Link, NavLink } from "react-router-dom";
+
 class MoviesTable extends Component {
   columns = [
     {
@@ -8,7 +10,8 @@ class MoviesTable extends Component {
       label: "image",
       content:m=> <img src="https://dummyimage.com/50x50/55595c/fff" />      
     },
-    { path: "title", label: "Title" },
+    { path: "title", label: "Title" , 
+      content: m => <Link to={`/movies/${m._id}`} > {m.title} </Link> },
     { path: "genre.name", label: "Genres" },
     {
       key: "_like",
