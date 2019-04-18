@@ -70,8 +70,8 @@ class App extends Component {
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>
             <Route path="/404" component={NotFound} />   
-            <Route path="/" exact component={MoviesComp}/>
-          <Redirect to="/404"/>
+          <Redirect from="/" exact to="/movies"/>
+          <Redirect  to="/404"/>
       </Switch>
     
        <hr className="my-5" />
