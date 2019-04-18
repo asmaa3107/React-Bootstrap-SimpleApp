@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
+
 import './index.scss';
 import App from './App';
 import 'bootstrap/scss/bootstrap.scss';
@@ -7,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 // import MoviesComp from './components/movies';
 
 // library.add(FontAwesomeIcon) ;
-ReactDOM.render( <App/> , document.getElementById('root'));
+ReactDOM.render( <BrowserRouter><App/></BrowserRouter> , document.getElementById('root'));
 //  ReactDOM.render( <MoviesComp/> , document.getElementById('root'));
 // ReactDOM.render( <Counters/> , document.getElementById('root'));
  
