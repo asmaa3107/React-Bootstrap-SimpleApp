@@ -11,6 +11,7 @@ import MovieDetails from './components/movieDetails';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notfound';
+import LoginForm from './components/loginForm';
 class App extends Component {
   state = {
     counters: [
@@ -69,6 +70,7 @@ class App extends Component {
             <Route path="/movies" render={ props => <MoviesComp sortBy="newest" {...props}/> } />
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>
+            <Route path="/login" component={LoginForm}/>
             <Route path="/404" component={NotFound} />   
           <Redirect from="/" exact to="/movies"/>
           <Redirect  to="/404"/>

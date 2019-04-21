@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import LoginForm from "./loginForm";
 
 //child view
 //stateless commponent
@@ -46,10 +47,16 @@ const Navbar = props => {
               </a>
             </li>
             <li className="nav-item">
+              <Link to="/login" className="nav-link" >
+                login <i className="fa fa-sign-in" aria-hidden="true" />
+              </Link>
+            </li>
+             <li className="nav-item">
               <a className="nav-link" href="#">
                 Logout <i className="fa fa-sign-out" aria-hidden="true" />
               </a>
             </li>
+         
           </ul>
         </div>
       </div>
