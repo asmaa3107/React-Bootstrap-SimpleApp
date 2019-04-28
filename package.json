@@ -5,12 +5,14 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "i": "^0.3.6",
+    "joi-browser": "^13.4.0",
     "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.4.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-joi-validation": "^1.7.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
   },

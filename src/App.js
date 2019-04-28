@@ -58,7 +58,7 @@ class App extends Component {
   render() {
     return ( 
     <React.Fragment>
-      <Navbar   totalValues={this.state.counters.filter(c => c.value>0).length}     />
+      <Navbar totalValues={this.state.counters.filter(c => c.value>0).length}/>
        <div className="jumbotron text-center">
           <div className="container  ">
             <h1 className="jumbotron-heading">E-COMMERCE CART</h1>
