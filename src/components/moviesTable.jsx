@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Like from "./comman/like";
 import TableComp from "./comman/table";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class MoviesTable extends Component {
   columns = [
@@ -13,6 +13,9 @@ class MoviesTable extends Component {
     { path: "title", label: "Title" , 
       content: m => <Link to={`/movies/${m._id}`} > {m.title} </Link> },
     { path: "genre.name", label: "Genres" },
+    { path: "numberInStock", label: "# of Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
+    
     {
       key: "_like",
       label: "Likes",
@@ -35,6 +38,7 @@ class MoviesTable extends Component {
     const { movies,  sortColumn, onSort } = this.props;
     return (
       <div>
+
       <TableComp
       columns={this.columns}
       sortColumn={sortColumn}

@@ -4,6 +4,7 @@ import { getGenres } from "../services/fakeGenreService";
 import Pagination from "./comman/pagination";
 import Grouping from "./comman/grouping";
 import MoviesTable from "./moviesTable";
+import { Link } from "react-router-dom";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 class MoviesComp extends Component {
@@ -91,6 +92,15 @@ class MoviesComp extends Component {
                 ) : (
                   <p>we have {totalCount} Movies .. Enjoy!</p>
                 )}
+                <div>
+                  <Link
+                    to={`/movies/:id`}
+                    className=" btn btn-default btn-outline-primary mb-2"
+                  >
+                    <i class="fa fa-plus mr-1" />
+                    Add Movie
+                  </Link>
+                </div>
                 <MoviesTable
                   movies={data}
                   sortColumn={sortColumn}

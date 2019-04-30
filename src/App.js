@@ -67,7 +67,7 @@ class App extends Component {
         </div>
       <main className="container">
       <Switch>
-            <Route path="/movies/:id" component={MovieDetails}  />
+            <Route path="/movies/:id"  component={MovieDetails}  />
             <Route path="/movies" render={ props => <MoviesComp sortBy="newest" {...props}/> } />
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>
