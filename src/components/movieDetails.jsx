@@ -13,7 +13,7 @@ class MovieDetails extends Component {
         <p>
           movie id : {id}
         </p>
-        <input name="" id="" class="btn btn-primary" type="button" value="save" 
+        <input name="" id="" className="btn btn-primary" type="button" value="save" 
         onClick={this.handleSave}
         />
       </div>

@@ -17,7 +17,7 @@ const Input = ({ name, lable, value,error, onChange }) => {
   
     { error &&  <small className="text-danger my-2">
     
-        <i class="fa fa-exclamation-triangle" aria-hidden="true" />
+        <i className="fa fa-exclamation-triangle" aria-hidden="true" />
         &nbsp; {error}
       </small>
   
