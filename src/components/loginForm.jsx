@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
-import Input from "./comman/input";
 import Form from "./comman/form";
 ReactJoiValidations.setJoi(Joi);
 
@@ -38,7 +37,7 @@ class LoginForm extends Form {
         <div className="container text-center w-50">
           <form className="text-left" onSubmit={this.handleSubmit}>
             {this.renderInput("username", "User name")}
-            {this.renderInput("password", "Password")}
+            {this.renderInput("password", "Password","password")}
             {this.renderButton("login")}
           </form>
         </div>

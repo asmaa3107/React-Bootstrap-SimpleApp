@@ -1,28 +1,24 @@
 import React from "react";
-
-const Input = ({ name, lable, value,error, onChange }) => {
+//...rest opertator >> send every thing shared on form component wich useing Input class
+const Input = ({ name, lable, error, ...rest }) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{lable}</label>
       <input
-        autoFocus
-        type="text"
+        {...rest}
         name={name}
         id={name}
         className="form-control"
         placeholder=""
-        value={value}
-        onChange={onChange}
       />
-  
-    { error &&  <small className="text-danger my-2">
-    
-        <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-        &nbsp; {error}
-      </small>
-  
-    }
-      </div>
+
+      {error && (
+        <small className="text-danger my-2">
+          <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+          &nbsp; {error}
+        </small>
+      )}
+    </div>
   );
 };
 

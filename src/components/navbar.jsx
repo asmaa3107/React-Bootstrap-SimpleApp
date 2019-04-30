@@ -41,21 +41,26 @@ const Navbar = props => {
                 </span>
               </a>
             </li>{" "}
-            <li className="nav-item">
+          {/*   <li className="nav-item">
               <a className="nav-link" href="#">
                 Profile
               </a>
+            </li> */}
+            <li className="nav-item">
+              <Link to="/register" className="nav-link" >
+                Create Account <i className="fa fa-sign-in" aria-hidden="true" />
+              </Link>
             </li>
             <li className="nav-item">
               <Link to="/login" className="nav-link" >
                 login <i className="fa fa-sign-in" aria-hidden="true" />
               </Link>
             </li>
-             <li className="nav-item">
+     {/*         <li className="nav-item">
               <a className="nav-link" href="#">
                 Logout <i className="fa fa-sign-out" aria-hidden="true" />
               </a>
-            </li>
+            </li> */}
          
           </ul>
         </div>

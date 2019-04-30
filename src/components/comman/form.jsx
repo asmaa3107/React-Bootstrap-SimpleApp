@@ -52,11 +52,12 @@ class Form extends Component {
     );
   };
 
-  renderInput(name,label) {
+  renderInput(name,label ,type) {
     const { errors ,data} = this.state;
 
     return (
          <Input
+         type={type}
               name={name}
               error={errors[name]}
               lable={label}

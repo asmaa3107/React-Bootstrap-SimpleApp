@@ -12,6 +12,7 @@ import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notfound';
 import LoginForm from './components/loginForm';
+import RegisterForm from './components/registerForm';
 class App extends Component {
   state = {
     counters: [
@@ -71,6 +72,7 @@ class App extends Component {
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>
             <Route path="/login" component={LoginForm}/>
+            <Route path="/register" component={RegisterForm}/>  
             <Route path="/404" component={NotFound} />   
           <Redirect from="/" exact to="/movies"/>
           <Redirect  to="/404"/>
