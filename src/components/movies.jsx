@@ -47,7 +47,6 @@ class MoviesComp extends Component {
     this.setState({ sortColumn: sortColumn });
     //console.log(sortColumn);
   };
-
   getPagedData = () => {
     //es6 parameter destracting
     const {
@@ -94,10 +93,10 @@ class MoviesComp extends Component {
                 )}
                 <div>
                   <Link
-                    to={`/movies/:id`}
+                    to={`/movies/new`}
                     className=" btn btn-default btn-outline-primary mb-2"
                   >
-                    <i class="fa fa-plus mr-1" />
+                    <i className="fa fa-plus mr-1" />
                     Add Movie
                   </Link>
                 </div>
