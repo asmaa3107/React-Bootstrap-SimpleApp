@@ -1,7 +1,8 @@
 import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
-
+import * as userService from "../services/usersService";
+import * as authService from "../services/authService";
 import Form from "./comman/form";
 ReactJoiValidations.setJoi(Joi);
 
@@ -18,7 +19,7 @@ class RegisterForm extends Form {
     username: Joi.string()
       .required()
       .email()
-      .label("Username"),
+      .label("Email Adress"),
     password: Joi.string()
       .required()
       .label("Password")
@@ -27,8 +28,18 @@ class RegisterForm extends Form {
       .required()
       .label("Username")
   };
-  doSubmit = () => {
-    console.log("registerd");
+  doSubmit = async () => {
+    try {
+      await userService.register(this.state.data);
+      console.log("registerd");
+    } catch (ex) {
+      //handle Client Error (user enter wrong or duplicted data ) 400 status
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
@@ -38,7 +49,7 @@ class RegisterForm extends Form {
       <React.Fragment>
         <div className="container text-center w-50">
           <form className="text-left" onSubmit={this.handleSubmit}>
-            {this.renderInput("username", "User name", "email")}
+            {this.renderInput("username", "Email Adress", "email")}
             {this.renderInput("password", "Password", "password")}
             {this.renderInput("name", "Full Name", "text")}
             {this.renderButton("Register")}
