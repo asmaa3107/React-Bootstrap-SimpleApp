@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { toast } from "react-toastify";
+import { getMovies, deleteMovie } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 import Pagination from "./comman/pagination";
 import Grouping from "./comman/grouping";
 import MoviesTable from "./moviesTable";
@@ -16,18 +17,28 @@ class MoviesComp extends Component {
     sortColumn: { path: "genre.name", order: "asc" },
     genres: [],
     searchQuery: "",
-selectedGenre:null,
+    selectedGenre: null,
     selectedItem: []
   };
-  componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
-    this.setState({ movies: getMovies(), genres });
+  async componentDidMount() {
+    const { data } = await getGenres();
+    const genres = [{ _id: "", name: "All Genres" }, ...data];
+    const { data: movies } = await getMovies();
+    this.setState({ movies, genres });
   }
-  confirmDelete = movie => {
-    const updated_movielist = this.state.movies.filter(
-      m => m._id !== movie._id
-    );
+  confirmDelete = async movie => {
+    const orignalMovies = this.state.movies;
+    const updated_movielist = orignalMovies.filter(m => m._id !== movie._id);
+
     this.setState({ movies: updated_movielist });
+    try {
+    await deleteMovie(movie._id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        toast.error("this movie has already been deleted");
+      }
+      this.setState({ movies: updated_movielist });
+    }
     // console.log(movie);
   };
   handelLiked = movie => {
@@ -43,7 +54,7 @@ selectedGenre:null,
     this.setState({ currentPage: page });
   };
   handelGenreSelect = genre => {
-    this.setState({ selectedGenre: genre, currentPage: 1  }); //nsole.log(genre);
+    this.setState({ selectedGenre: genre, currentPage: 1 }); //nsole.log(genre);
   };
   handleSearch = query => {
     this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
@@ -65,7 +76,7 @@ selectedGenre:null,
       movies: allMovies
     } = this.state;
     //filtering
-   let filterd = allMovies;
+    let filterd = allMovies;
     if (searchQuery)
       filterd = allMovies.filter(m =>
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())

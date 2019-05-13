@@ -2,6 +2,9 @@ import React, {
   Component
 } from 'react';
 import {Route ,Switch,Redirect } from 'react-router-dom';
+
+import {ToastContainer} from 'react-toastify';  
+
 import './App.scss';
 import  MoviesComp from './components/movies';
 import Counters from './components/counters';
@@ -13,6 +16,7 @@ import Rentals from './components/rentals';
 import NotFound from './components/notfound';
 import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
+import 'react-toastify/dist/ReactToastify.min.css';
 class App extends Component {
   state = {
     counters: [
@@ -59,6 +63,7 @@ class App extends Component {
   render() {
     return ( 
     <React.Fragment>
+      <ToastContainer />
       <Navbar totalValues={this.state.counters.filter(c => c.value>0).length}/>
        <div className="jumbotron text-center">
           <div className="container  ">

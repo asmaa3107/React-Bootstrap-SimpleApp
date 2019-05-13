@@ -6,7 +6,7 @@ class Counters extends Component {
     const {onReset,onDelete,counters} =this.props;
     return (
       <React.Fragment>
-        <div>
+        <div className="d-none">
           <button
             className="btn btn-primary btn-sm m-2"
             type="reset"

@@ -2,8 +2,8 @@ import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
 import Form from "./comman/form";
-import { getMovie, saveMovie } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { getMovie, saveMovie } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 ReactJoiValidations.setJoi(Joi);
 
 class MovieDetails extends Form {
@@ -31,23 +31,31 @@ class MovieDetails extends Form {
       .min(0)
       .max(10)
   };
-  componentDidMount() {
-    //bind all genres
-    const genres = getGenres();
+
+  async populateGenres() {
+    const { data: genres } = await getGenres();
     this.setState({ genres });
-
-    //get Movie _id
-    const { id } = this.props.match.params;
-    if (id === "new") return;
-
-    //get Movie by id
-    const movie = getMovie(id);
-    // console.table(movie);
-    if (!movie) return this.props.history.replace("/404");
-
-    this.setState({ data: this.getMovieObj(movie) });
   }
-  getMovieObj(movie) {
+
+  async populateMovie() {
+    try {
+      const movieId = this.props.match.params.id;
+      if (movieId === "new") return;
+
+      const { data: movie } = await getMovie(movieId);
+      this.setState({ data: this.mapToViewModel(movie) });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        this.props.history.replace("/404");
+    }
+  }
+
+  async componentDidMount() {
+    await this.populateGenres();
+    await this.populateMovie();
+  }
+
+  mapToViewModel(movie) {
     return {
       _id: movie._id,
       title: movie.title,
@@ -56,15 +64,13 @@ class MovieDetails extends Form {
       dailyRentalRate: movie.dailyRentalRate
     };
   }
-
-  doSubmit = () => {
-    saveMovie(this.state.data);
+  doSubmit = async () => {
+    await saveMovie(this.state.data);
     this.props.history.push("/movies");
   };
   render() {
     const { id } = this.props.match.params;
-    const { title, genreId, numberInStock, dailyRentalRate } = this.state.data;
-    const { errors, genres } = this.state;
+    const { genres } = this.state;
     return (
       <React.Fragment>
         <div>
@@ -74,10 +80,10 @@ class MovieDetails extends Form {
         <div className="w-50">
           <form className="text-left" onSubmit={this.handleSubmit}>
             {this.renderInput("title", "Movie Name")}
-            {this.renderSelect("genreId", "Genre",this.state.genres)}
+            {this.renderSelect("genreId", "Genre", genres)}
             {this.renderInput("numberInStock", "numberInStock", "number")}
             {this.renderInput("dailyRentalRate", "Rate", "number")}
-            {this.renderButton("Add Movie")}
+            {this.renderButton("Save Movie")}
           </form>
         </div>
       </React.Fragment>
