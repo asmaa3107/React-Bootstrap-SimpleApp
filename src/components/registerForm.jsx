@@ -2,7 +2,6 @@ import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
 import * as userService from "../services/usersService";
-import * as authService from "../services/authService";
 import Form from "./comman/form";
 ReactJoiValidations.setJoi(Joi);
 
@@ -30,8 +29,11 @@ class RegisterForm extends Form {
   };
   doSubmit = async () => {
     try {
-      await userService.register(this.state.data);
-      console.log("registerd");
+    const resp = await userService.register(this.state.data);
+    localStorage.setItem("token", resp.headers['x-auth-token']);
+    this.props.history.push("/");
+
+      // console.log(resp);
     } catch (ex) {
       //handle Client Error (user enter wrong or duplicted data ) 400 status
       if (ex.response && ex.response.status === 400) {

@@ -1,14 +1,13 @@
 import http from "./httpService";
 import { apiUrl } from "../config.json";
 
-const apiEndPoint = apiUrl + "/users";
+const apiEndPoint = apiUrl + "/auth";
 
 
-export function register(user) {
+export function login(email,password) {
   return http.post(apiEndPoint, {
-    email: user.username,
-    password: user.password,
-    name: user.name
+    email,
+    password
   });
 }
 

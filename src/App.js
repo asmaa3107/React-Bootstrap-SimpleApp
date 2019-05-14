@@ -1,10 +1,8 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 import {Route ,Switch,Redirect } from 'react-router-dom';
-
 import {ToastContainer} from 'react-toastify';  
-
+import  jwtDecode from 'jwt-decode';
+//---------------------------------------------
 import './App.scss';
 import  MoviesComp from './components/movies';
 import Counters from './components/counters';
@@ -17,7 +15,7 @@ import NotFound from './components/notfound';
 import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
 import 'react-toastify/dist/ReactToastify.min.css';
-class App extends Component {
+class App extends Component { 
   state = {
     counters: [
       { id: 0, value: 0 },
@@ -26,9 +24,18 @@ class App extends Component {
       { id: 3, value: 0 },
       { id: 4, value: 0 }
     ]
-
-
   };
+
+  componentDidMount(){
+    try {
+      const jwt = localStorage.getItem('token');
+      const user = jwtDecode(jwt);
+      this.setState({user});
+      console.table(user);
+      
+    } catch (error) {   }
+
+  }
 //  total = this.state.counters.filter(c=> c.value>0).length;  
   handelDelete = counterId => {
     const counters = this.state.counters.filter(c => c.id !== counterId);
@@ -64,7 +71,9 @@ class App extends Component {
     return ( 
     <React.Fragment>
       <ToastContainer />
-      <Navbar totalValues={this.state.counters.filter(c => c.value>0).length}/>
+      <Navbar
+      userData={this.setState.user}
+      totalValues={this.state.counters.filter(c => c.value>0).length} />
        <div className="jumbotron text-center">
           <div className="container  ">
             <h1 className="jumbotron-heading">E-COMMERCE CART</h1>

@@ -2,6 +2,8 @@ import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
 import Form from "./comman/form";
+import * as authService from "../services/authService";
+
 ReactJoiValidations.setJoi(Joi);
 
 class LoginForm extends Form {
@@ -17,16 +19,33 @@ class LoginForm extends Form {
   schema = {
     username: Joi.string()
       .required()
-      .label("Username"),
+      .label("Email"),
     password: Joi.string()
       .required()
       .label("Password")
     // .min(8)
   };
 
-  doSubmit = () => {
+  doSubmit = async () => {
     //call server;
-    console.log("sumited");
+    try {
+      const { data } = this.state;
+      const { data: jwt } = await authService.login(
+        data.username,
+        data.password
+      );
+      //get JWT
+      localStorage.setItem("token", jwt);
+      this.props.history.push("/");
+      // console.log(jwt);
+    } catch (ex) {
+      //handle Client Error (user enter wrong or duplicted data ) 400 status
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
@@ -36,8 +55,8 @@ class LoginForm extends Form {
       <React.Fragment>
         <div className="container text-center w-50">
           <form className="text-left" onSubmit={this.handleSubmit}>
-            {this.renderInput("username", "User name")}
-            {this.renderInput("password", "Password","password")}
+            {this.renderInput("username", "Email")}
+            {this.renderInput("password", "Password", "password")}
             {this.renderButton("login")}
           </form>
         </div>
