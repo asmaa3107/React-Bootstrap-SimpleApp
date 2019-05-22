@@ -2,7 +2,7 @@ import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
 import Form from "./comman/form";
-import * as authService from "../services/authService";
+import  authService from "../services/authService";
 
 ReactJoiValidations.setJoi(Joi);
 
@@ -30,14 +30,14 @@ class LoginForm extends Form {
     //call server;
     try {
       const { data } = this.state;
-      const { data: jwt } = await authService.login(
+      await authService.login(
         data.username,
         data.password
       );
-      //get JWT
-      localStorage.setItem("token", jwt);
-      this.props.history.push("/");
-      // console.log(jwt);
+
+     //reload whole page
+     window.location='/';
+    
     } catch (ex) {
       //handle Client Error (user enter wrong or duplicted data ) 400 status
       if (ex.response && ex.response.status === 400) {

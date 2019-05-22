@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Route ,Switch,Redirect } from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';  
-import  jwtDecode from 'jwt-decode';
 //---------------------------------------------
 import './App.scss';
 import  MoviesComp from './components/movies';
@@ -13,10 +12,14 @@ import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notfound';
 import LoginForm from './components/loginForm';
+import Logout from './components/logout';
+
 import RegisterForm from './components/registerForm';
+import  authService from "./services/authService";
 import 'react-toastify/dist/ReactToastify.min.css';
 class App extends Component { 
   state = {
+
     counters: [
       { id: 0, value: 0 },
       { id: 1, value: 0 },
@@ -28,8 +31,7 @@ class App extends Component {
 
   componentDidMount(){
     try {
-      const jwt = localStorage.getItem('token');
-      const user = jwtDecode(jwt);
+      const user =  authService.getCurrentUser();
       this.setState({user});
       console.table(user);
       
@@ -68,12 +70,14 @@ class App extends Component {
   };
 
   render() {
+    const {user} = this.state;
     return ( 
     <React.Fragment>
       <ToastContainer />
-      <Navbar
-      userData={this.setState.user}
-      totalValues={this.state.counters.filter(c => c.value>0).length} />
+      <Navbar  
+        user={user}
+        totalValues={this.state.counters.filter(c => c.value>0).length}
+       />
        <div className="jumbotron text-center">
           <div className="container  ">
             <h1 className="jumbotron-heading">E-COMMERCE CART</h1>
@@ -81,11 +85,16 @@ class App extends Component {
         </div>
       <main className="container">
       <Switch>
-            <Route path="/movies/:id"  component={MovieDetails}  />
-            <Route path="/movies" render={ props => <MoviesComp sortBy="newest" {...props}/> } />
+            <Route path="/movies/:id" 
+            render ={props => {
+              if (!user) return <Redirect to="/login" />
+              return <MovieDetails {...props} />
+            }}  />
+            <Route path="/movies" render={ props => <MoviesComp sortBy="newest" {...props} user={user}/> } />
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>
             <Route path="/login" component={LoginForm}/>
+            <Route path="/logout" component={Logout}/>
             <Route path="/register" component={RegisterForm}/>  
             <Route path="/404" component={NotFound} />   
           <Redirect from="/" exact to="/movies"/>

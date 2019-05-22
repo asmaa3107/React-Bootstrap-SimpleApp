@@ -99,6 +99,7 @@ class MoviesComp extends Component {
       sortColumn,
       searchQuery
     } = this.state;
+   const {user} = this.props;
     const count = this.state.movies.length;
     const { totalCount, data } = this.getPagedData();
     return (
@@ -115,13 +116,13 @@ class MoviesComp extends Component {
             <div className="col-9">
               <div className="table-responsive">
                 <div>
-                  <Link
+                  {user && (<Link
                     to={`/movies/new`}
                     className=" btn btn-default btn-outline-primary mb-2"
                   >
                     <i className="fa fa-plus mr-1" />
                     Add Movie
-                  </Link>
+                  </Link>)} 
                 </div>
                 {count === 0 ? (
                   <p>No Movies Here </p>

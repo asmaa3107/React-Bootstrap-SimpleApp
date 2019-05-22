@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import LoginForm from "./loginForm";
+// import LoginForm from "./loginForm";
 
 //child view
 //stateless commponent
-const Navbar = ({totalValues, user}) => {
+const Navbar = ({ totalValues, user }) => {
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
+    
       <div className="container">
         <NavLink to="/" className="navbar-brand">
           M.Movies
@@ -48,16 +49,17 @@ const Navbar = ({totalValues, user}) => {
                 </span>
               </a>
             </li>
-            {/*  {!user && <span>yes true user</span>}
-            {user && <span>false caseno user</span>}
-            {user != null ? (<span>nooooo</span>):(<span>yessss</span>)}
+            {/*  {!user && <span>register</span>}
+            {user && <span>welcome {user.name}</span>}
+            {user != null ? (<span>hello</span>):(<span>login</span>)}
             */}
-            {!user && (
+           
+			 {user && (
               <React.Fragment>
                 <li className="nav-item">
                   <Link to="/profile" className="nav-link">
-                   {/* {user.map(u => (<span>u.name</span>))} */}
-                   {/* {user.name} */}
+                    {/* {user.map(u => (<span>u.name</span>))} */}
+                    {user.name}
                     <i className="fa fa-user-circle-o" aria-hidden="true" />
                   </Link>
                 </li>
@@ -69,11 +71,11 @@ const Navbar = ({totalValues, user}) => {
               </React.Fragment>
             )}
 
-            {user && (
+            {!user && (
               <React.Fragment>
                 <li className="nav-item">
                   <Link to="/register" className="nav-link">
-                    Create Account 
+                    Create Account
                     <i className="fa fa-sign-in" aria-hidden="true" />
                   </Link>
                 </li>
