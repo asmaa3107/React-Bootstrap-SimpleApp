@@ -2,7 +2,8 @@ import React from "react";
 import ReactJoiValidations from "react-joi-validation";
 import Joi from "joi-browser";
 import Form from "./comman/form";
-import  authService from "../services/authService";
+import authService from "../services/authService";
+import {  Redirect } from "react-router-dom";
 
 ReactJoiValidations.setJoi(Joi);
 
@@ -30,14 +31,10 @@ class LoginForm extends Form {
     //call server;
     try {
       const { data } = this.state;
-      await authService.login(
-        data.username,
-        data.password
-      );
-
-     //reload whole page
-     window.location='/';
-    
+      await authService.login(data.username, data.password);
+      const { state:lastUrl } = this.props.location;
+      //reload whole page
+      window.location = lastUrl ? lastUrl.from.pathname : "/";
     } catch (ex) {
       //handle Client Error (user enter wrong or duplicted data ) 400 status
       if (ex.response && ex.response.status === 400) {
@@ -49,8 +46,7 @@ class LoginForm extends Form {
   };
 
   render() {
-    const { username, password } = this.state.data;
-    const { errors } = this.state;
+   if(authService.getCurrentUser()) return <Redirect to="/" />
     return (
       <React.Fragment>
         <div className="container text-center w-50">

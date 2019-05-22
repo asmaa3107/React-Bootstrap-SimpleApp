@@ -13,10 +13,11 @@ import Rentals from './components/rentals';
 import NotFound from './components/notfound';
 import LoginForm from './components/loginForm';
 import Logout from './components/logout';
-
+import ProtectedRouter from './components/comman/protectedRouter';
 import RegisterForm from './components/registerForm';
 import  authService from "./services/authService";
 import 'react-toastify/dist/ReactToastify.min.css';
+
 class App extends Component { 
   state = {
 
@@ -85,11 +86,8 @@ class App extends Component {
         </div>
       <main className="container">
       <Switch>
-            <Route path="/movies/:id" 
-            render ={props => {
-              if (!user) return <Redirect to="/login" />
-              return <MovieDetails {...props} />
-            }}  />
+            <ProtectedRouter 
+              path="/movies/:id"  component = {MovieDetails} />
             <Route path="/movies" render={ props => <MoviesComp sortBy="newest" {...props} user={user}/> } />
             <Route path="/cutomers" component={Customers}/>
             <Route path="/rentals" component={Rentals}/>

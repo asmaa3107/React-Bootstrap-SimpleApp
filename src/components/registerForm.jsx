@@ -47,8 +47,8 @@ class RegisterForm extends Form {
   };
 
   render() {
-    const { username, password, name } = this.state.data;
-    const { errors } = this.state;
+    // const { username, password, name } = this.state.data;
+    // const { errors } = this.state;
     return (
       <React.Fragment>
         <div className="container text-center w-50">

@@ -119,7 +119,7 @@ class MoviesComp extends Component {
                   {user && (<Link
                     to={`/movies/new`}
                     className=" btn btn-default btn-outline-primary mb-2"
-                  >
+                  > 
                     <i className="fa fa-plus mr-1" />
                     Add Movie
                   </Link>)} 
